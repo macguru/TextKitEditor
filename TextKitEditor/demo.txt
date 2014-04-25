@@ -7,6 +7,6 @@
 int main(int argc, const char * argv[])
 {
 	// insert code here...
-	printf("Hello, World!\n");
+	printf("Hello, Istanbul! How are you today?\n");
     return 0;
 }
