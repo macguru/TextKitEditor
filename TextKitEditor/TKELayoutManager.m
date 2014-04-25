@@ -11,6 +11,9 @@
 #import "TKETextStorage.h"
 
 
+#define TKELayoutManagerParagraphNumberInset	20.
+
+
 @interface TKELayoutManager () <NSLayoutManagerDelegate>
 @end
 
@@ -33,7 +36,43 @@
 
 - (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex
 {
-	return UIEdgeInsetsMake(0, 20, 0, 0);
+	CGFloat wrappingIndent = 0;
+	
+	// For wrapped lines, determine where line is supposed to start
+	NSRange paragraphRange = [self.textStorage.string paragraphRangeForRange: NSMakeRange(characterIndex, 0)];
+	if (paragraphRange.location < characterIndex) {
+		// Get the first glyph index in the paragraph
+		NSUInteger firstGlyphIndex = [self glyphIndexForCharacterAtIndex: paragraphRange.location];
+
+		// Get the first line of the paragraph
+		NSRange firstLineGlyphRange;
+		[self lineFragmentRectForGlyphAtIndex:firstGlyphIndex effectiveRange:&firstLineGlyphRange];
+		NSRange firstLineCharRange = [self characterRangeForGlyphRange:firstLineGlyphRange actualGlyphRange:NULL];
+		
+		// Find the first wrapping char (here we use brackets), and wrap one char behind
+		NSUInteger wrappingCharIndex = NSNotFound;
+		wrappingCharIndex = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString: @"({["] options:0 range:firstLineCharRange].location;
+		if (wrappingCharIndex != NSNotFound)
+			wrappingCharIndex += 1;
+		
+		// Alternatively, fall back to the first text (ie. non-whitespace) char
+		if (wrappingCharIndex == NSNotFound) {
+			wrappingCharIndex = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet.whitespaceCharacterSet invertedSet] options:0 range:firstLineCharRange].location;
+			if (wrappingCharIndex != NSNotFound)
+				wrappingCharIndex += 2;
+		}
+		
+		// Wrapping char found, determine indent
+		if (wrappingCharIndex != NSNotFound) {
+			NSUInteger firstTextGlyphIndex = [self glyphIndexForCharacterAtIndex: wrappingCharIndex];
+			
+			// The additional indent is the distance from the first to the last character
+			wrappingIndent = [self locationForGlyphAtIndex: firstTextGlyphIndex].x - [self locationForGlyphAtIndex: firstGlyphIndex].x;
+		}
+	}
+	
+	// Standard inset for paragragh numbers plus wrapping inset
+	return UIEdgeInsetsMake(0, TKELayoutManagerParagraphNumberInset + wrappingIndent, 0, 0);
 }
 
 
