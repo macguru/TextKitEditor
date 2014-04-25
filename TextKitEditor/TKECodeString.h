@@ -10,4 +10,23 @@
  @abstract Sting model class, exemplifying external storage of text.
  */
 @interface TKECodeString : NSMutableString
+
+/*!
+ @abstract The types of code recognized by the string enumerator.
+ */
+typedef enum : NSUInteger {
+	TKECodeTypeText,
+	
+	TKECodeTypeComment,
+	TKECodeTypePragma,
+	TKECodeTypeKeyword
+} TKECodeType;
+
+
+/*!
+ @abstract Enumerates a passed range and detects various code types in it.
+ @discussion For simplicity's sake, the passed range must be a paragraph range!
+ */
+- (void)enumerateCodeInRange:(NSRange)range usingBlock:(void (^)(NSRange range, TKECodeType type))block;
+
 @end

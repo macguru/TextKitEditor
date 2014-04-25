@@ -47,4 +47,48 @@
 	[_imp replaceCharactersInRange:range withString:aString];
 }
 
+
+#pragma mark - Code enumeration
+
+- (void)enumerateCodeInRange:(NSRange)range usingBlock:(void (^)(NSRange range, TKECodeType type))block
+{
+	NSParameterAssert(NSEqualRanges(range, [self paragraphRangeForRange: range]));
+	
+	// Enumerate lines
+	[self enumerateSubstringsInRange:range options:NSStringEnumerationByParagraphs usingBlock:^(NSString *paragraph, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+		// Detect comments
+		if ([[paragraph stringByTrimmingCharactersInSet: NSCharacterSet.whitespaceCharacterSet] hasPrefix: @"//"]) {
+			block(enclosingRange, TKECodeTypeComment);
+			return;
+		}
+		
+		// Detect comments
+		if ([paragraph hasPrefix: @"#"]) {
+			block(enclosingRange, TKECodeTypePragma);
+			return;
+		}
+		
+		// Detect keywords
+		[self enumerateSubstringsInRange:enclosingRange options:NSStringEnumerationByWords usingBlock:^(NSString *word, NSRange innerSubstringRange, NSRange innerEnclosingRange, BOOL *stop) {
+			// Substring is a keyword
+			if ([@[@"int", @"const", @"char", @"return"] containsObject: word]) {
+				// Text before keyword is just text
+				if (innerEnclosingRange.location < innerSubstringRange.location)
+					block(NSMakeRange(innerEnclosingRange.location, innerSubstringRange.location - innerEnclosingRange.location), TKECodeTypeText);
+				
+				// Keyword is a keyword
+				block(innerSubstringRange, TKECodeTypeKeyword);
+				
+				// Text behind keyword is just text
+				if (NSMaxRange(innerEnclosingRange) > NSMaxRange(innerSubstringRange))
+					block(NSMakeRange(NSMaxRange(innerSubstringRange), NSMaxRange(innerEnclosingRange) - NSMaxRange(innerSubstringRange)), TKECodeTypeText);
+			}
+			// No keyword match, it's just text
+			else {
+				block(innerEnclosingRange, TKECodeTypeText);
+			}
+		}];
+	}];
+}
+
 @end
