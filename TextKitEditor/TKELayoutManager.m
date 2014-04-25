@@ -11,7 +11,7 @@
 #import "TKETextStorage.h"
 
 
-#define TKELayoutManagerParagraphNumberInset	20.
+#define TKELayoutManagerParagraphNumberInset	16.
 
 
 @interface TKELayoutManager () <NSLayoutManagerDelegate>
