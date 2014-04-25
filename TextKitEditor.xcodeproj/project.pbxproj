@@ -14,7 +14,6 @@
 		506A80EC190A474200148547 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A80EB190A474200148547 /* main.m */; };
 		506A80F0190A474200148547 /* TKEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A80EF190A474200148547 /* TKEAppDelegate.m */; };
 		506A80F3190A474200148547 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A80F1190A474200148547 /* Main.storyboard */; };
-		506A80F6190A474200148547 /* TKEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A80F5190A474200148547 /* TKEViewController.m */; };
 		506A80F8190A474200148547 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506A80F7190A474200148547 /* Images.xcassets */; };
 		506A80FF190A474200148547 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506A80FE190A474200148547 /* XCTest.framework */; };
 		506A8100190A474200148547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506A80DF190A474200148547 /* Foundation.framework */; };
@@ -25,7 +24,8 @@
 		506A811A190A4BCB00148547 /* TKETextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A8119190A4BCB00148547 /* TKETextStorage.m */; };
 		506A811D190A4BD900148547 /* TKELayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A811C190A4BD900148547 /* TKELayoutManager.m */; };
 		506A8120190A4CA200148547 /* TKETextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A811F190A4CA200148547 /* TKETextContainer.m */; };
-		506A8122190A4D5200148547 /* code.txt in Resources */ = {isa = PBXBuildFile; fileRef = 506A8121190A4D5200148547 /* code.txt */; };
+		506A8122190A4D5200148547 /* demo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 506A8121190A4D5200148547 /* demo.txt */; };
+		506A8139190A52DB00148547 /* TKEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A80F5190A474200148547 /* TKEViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +66,7 @@
 		506A811C190A4BD900148547 /* TKELayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKELayoutManager.m; sourceTree = "<group>"; };
 		506A811E190A4CA200148547 /* TKETextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKETextContainer.h; sourceTree = "<group>"; };
 		506A811F190A4CA200148547 /* TKETextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKETextContainer.m; sourceTree = "<group>"; };
-		506A8121190A4D5200148547 /* code.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = code.txt; sourceTree = "<group>"; };
+		506A8121190A4D5200148547 /* demo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demo.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,7 +152,7 @@
 				506A80E8190A474200148547 /* InfoPlist.strings */,
 				506A80EB190A474200148547 /* main.m */,
 				506A80ED190A474200148547 /* TextKitEditor-Prefix.pch */,
-				506A8121190A4D5200148547 /* code.txt */,
+				506A8121190A4D5200148547 /* demo.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -253,7 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				506A80F8190A474200148547 /* Images.xcassets in Resources */,
-				506A8122190A4D5200148547 /* code.txt in Resources */,
+				506A8122190A4D5200148547 /* demo.txt in Resources */,
 				506A80EA190A474200148547 /* InfoPlist.strings in Resources */,
 				506A80F3190A474200148547 /* Main.storyboard in Resources */,
 			);
@@ -276,10 +276,10 @@
 			files = (
 				506A8116190A4BB600148547 /* TKECodeString.m in Sources */,
 				506A8120190A4CA200148547 /* TKETextContainer.m in Sources */,
-				506A80F6190A474200148547 /* TKEViewController.m in Sources */,
 				506A80EC190A474200148547 /* main.m in Sources */,
 				506A80F0190A474200148547 /* TKEAppDelegate.m in Sources */,
 				506A811D190A4BD900148547 /* TKELayoutManager.m in Sources */,
+				506A8139190A52DB00148547 /* TKEViewController.m in Sources */,
 				506A811A190A4BCB00148547 /* TKETextStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
