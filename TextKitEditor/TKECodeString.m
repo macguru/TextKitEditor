@@ -48,7 +48,7 @@
 }
 
 
-#pragma mark - Code enumeration
+#pragma mark - Content intelligence
 
 - (void)enumerateCodeInRange:(NSRange)range usingBlock:(void (^)(NSRange range, TKECodeType type))block
 {
@@ -89,6 +89,18 @@
 			}
 		}];
 	}];
+}
+
+- (NSUInteger)paragraphNumberForParagraphAtIndex:(NSUInteger)index
+{
+	// WARNING: extremely inefficient implementation, should better be cached
+	
+	__block NSUInteger number = 1;
+	[self enumerateSubstringsInRange:NSMakeRange(0, index) options:NSStringEnumerationByParagraphs|NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+		number++;
+	}];
+	
+	return number;
 }
 
 @end

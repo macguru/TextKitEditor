@@ -29,4 +29,10 @@ typedef enum : NSUInteger {
  */
 - (void)enumerateCodeInRange:(NSRange)range usingBlock:(void (^)(NSRange range, TKECodeType type))block;
 
+
+/*!
+ @abstract Returns the paragraph number (aka line number) for the paragraph at the given index.
+ */
+- (NSUInteger)paragraphNumberForParagraphAtIndex:(NSUInteger)index;
+
 @end
