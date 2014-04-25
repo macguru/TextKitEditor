@@ -44,7 +44,8 @@
 	[_cache replaceCharactersInRange:NSMakeRange(0, oldLength) withString:_content];
 	[self edited:NSTextStorageEditedCharacters range:NSMakeRange(0, oldLength) changeInLength:(NSInteger)_content.length - oldLength];
 	
-	// TODO: Update attributes
+	// Compute attributes
+	[self updateAttributesForChangedRange: NSMakeRange(0, _content.length)];
 	
 	// End coalescing change notifications
 	[self endEditing];
@@ -89,8 +90,44 @@
 
 - (void)processEditing
 {
+	// Text has been changed in content and cache, now update the text colors as well
+	[self updateAttributesForChangedRange: self.editedRange];
+	
+	// Call super *after* changing the attributes, as it finalizes the attributes and calls the delegate methods.
 	[super processEditing];
-	// TODO: Compute some attributes.
+}
+
+- (UIColor *)textColorForCodeType:(TKECodeType)type
+{
+	switch (type) {
+		default:
+		case TKECodeTypeText:
+			return UIColor.blackColor;
+			
+		case TKECodeTypeComment:
+			return [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+			
+		case TKECodeTypePragma:
+			return [UIColor colorWithRed:0.4 green:0.2 blue:0 alpha:1];
+			
+		case TKECodeTypeKeyword:
+			return [UIColor colorWithRed:0.7 green:0 blue:0.3 alpha:1];
+	}
+}
+
+- (void)updateAttributesForChangedRange:(NSRange)range
+{
+	// Always re-compute complete paragraphs, the string requires us to
+	range = [self.content paragraphRangeForRange: range];
+	
+	// Clear all current attributes
+	[self setAttributes:@{} range:range];
+	
+	// Enumerate code types in range
+	[self.content enumerateCodeInRange:range usingBlock:^(NSRange range, TKECodeType type) {
+		// Text color depends on type
+		[self addAttribute:NSForegroundColorAttributeName value:[self textColorForCodeType: type] range:range];
+	}];
 }
 
 @end
