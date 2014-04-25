@@ -26,9 +26,35 @@
     if (self) {
 		// Let the layout manager handle the delegate by itself. Makes code more contained.
         self.delegate = self;
+		
+		// Set up some state
+		_showParagraphNumbers = NO;
+		_tabWidth = 2;
+		_lineHeight = 1;
     }
 	
     return self;
+}
+
+
+#pragma mark - Layout Properties
+
+- (void)setShowParagraphNumbers:(BOOL)showParagraphNumbers
+{
+	_showParagraphNumbers = showParagraphNumbers;
+	[self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+}
+
+- (void)setTabWidth:(NSUInteger)tabWidth
+{
+	_tabWidth = tabWidth;
+	[self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
+}
+
+- (void)setLineHeight:(CGFloat)lineHeight
+{
+	_lineHeight = lineHeight;
+	[self invalidateLayoutForCharacterRange:NSMakeRange(0, self.textStorage.length) actualCharacterRange:NULL];
 }
 
 
@@ -36,7 +62,11 @@
 
 - (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex
 {
-	CGFloat wrappingIndent = 0;
+	CGFloat leftInset = 0;
+	
+	// Base inset when showing paragraph numbers
+	if (self.showParagraphNumbers)
+		leftInset += TKELayoutManagerParagraphNumberInset;
 	
 	// For wrapped lines, determine where line is supposed to start
 	NSRange paragraphRange = [self.textStorage.string paragraphRangeForRange: NSMakeRange(characterIndex, 0)];
@@ -67,12 +97,12 @@
 			NSUInteger firstTextGlyphIndex = [self glyphIndexForCharacterAtIndex: wrappingCharIndex];
 			
 			// The additional indent is the distance from the first to the last character
-			wrappingIndent = [self locationForGlyphAtIndex: firstTextGlyphIndex].x - [self locationForGlyphAtIndex: firstGlyphIndex].x;
+			leftInset += [self locationForGlyphAtIndex: firstTextGlyphIndex].x - [self locationForGlyphAtIndex: firstGlyphIndex].x;
 		}
 	}
 	
-	// Standard inset for paragragh numbers plus wrapping inset
-	return UIEdgeInsetsMake(0, TKELayoutManagerParagraphNumberInset + wrappingIndent, 0, 0);
+	// For now we compute left insets only, but rigth inset is also possible
+	return UIEdgeInsetsMake(0, leftInset, 0, 0);
 }
 
 
@@ -80,8 +110,8 @@
 
 - (CGFloat)layoutManager:(NSLayoutManager *)layoutManager lineSpacingAfterGlyphAtIndex:(NSUInteger)glyphIndex withProposedLineFragmentRect:(CGRect)rect
 {
-	// Just a little bit more line spacing everywhere -- 10%
-	return 0.1 * rect.size.height;
+	// Line height is a multiple of the complete line, here we need only the extra space
+	return (MAX(_lineHeight, 1) - 1) * rect.size.height;
 }
 
 - (void)setLineFragmentRect:(CGRect)fragmentRect forGlyphRange:(NSRange)glyphRange usedRect:(CGRect)usedRect
@@ -109,10 +139,11 @@
 {
 	// Determine tab width. WARNING: The tab width computation is crazily expensive. Must be cached.
 	UIFont *primaryFont = ((TKETextStorage *)self.textStorage).font;
-	CGFloat tabWidth = [@"    " boundingRectWithSize:CGSizeMake(1000, 1000) options:0 attributes:@{NSFontAttributeName: primaryFont} context:nil].size.width;
+	CGFloat nWidth = [@"n" boundingRectWithSize:CGSizeMake(1000, 1000) options:0 attributes:@{NSFontAttributeName: primaryFont} context:nil].size.width;
 	
-	// Determine END of tab
-	CGFloat tabPosition = floor((glyphPosition.x + tabWidth/5) / tabWidth + 1) * tabWidth;
+	// Determine END of tab character
+	CGFloat tabSize = nWidth * self.tabWidth;
+	CGFloat tabPosition = floor((glyphPosition.x + nWidth/2) / tabSize + 1) * tabSize;
 
 	// Bounding rect from position to computed tab position
 	CGRect rect = CGRectZero;
@@ -129,10 +160,17 @@
 {
 	[super drawBackgroundForGlyphRange:glyphsToShow atPoint:origin];
 	
+	// Draw paragraph numbers if enabled
+	if (self.showParagraphNumbers)
+		[self drawParagraphNumbersForGlyphRange:glyphsToShow atPoint:origin];
+}
+
+- (void)drawParagraphNumbersForGlyphRange:(NSRange)glyphRange atPoint:(CGPoint)origin
+{
 	// Enumerate all lines
-	NSUInteger glyphIndex = glyphsToShow.location;
+	NSUInteger glyphIndex = glyphRange.location;
 	
-	while (glyphIndex < NSMaxRange(glyphsToShow)) {
+	while (glyphIndex < NSMaxRange(glyphRange)) {
 		NSRange glyphLineRange;
 		CGRect lineFragmentRect = [self lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:&glyphLineRange];
 		
