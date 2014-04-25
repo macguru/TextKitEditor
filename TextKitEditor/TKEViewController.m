@@ -38,7 +38,10 @@
 	_textStorage.content = _codeString;
 	_textStorage.font = [UIFont fontWithName:@"Menlo" size:13];
 	
-	NSLayoutManager *layoutManager = [TKELayoutManager new];
+	TKELayoutManager *layoutManager = [TKELayoutManager new];
+	layoutManager.lineHeight = 1.1;
+	layoutManager.showParagraphNumbers = YES;
+	layoutManager.tabWidth = 4;
 	[_textStorage addLayoutManager: layoutManager];
 	
 	NSTextContainer *textContainer = [[TKETextContainer alloc] initWithSize: CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
