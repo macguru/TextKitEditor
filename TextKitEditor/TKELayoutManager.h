@@ -10,4 +10,10 @@
  @abstract Layout manager performing additional magic in the code editor.
  */
 @interface TKELayoutManager : NSLayoutManager
+
+/*!
+ @abstract The left and right inset to be applied to the line starting at the specified character index.
+ */
+- (UIEdgeInsets)insetsForLineStartingAtCharacterIndex:(NSUInteger)characterIndex;
+
 @end
