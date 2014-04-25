@@ -95,6 +95,33 @@
 	[super setLineFragmentRect:fragmentRect forGlyphRange:glyphRange usedRect:usedRect];
 }
 
+- (NSControlCharacterAction)layoutManager:(NSLayoutManager *)layoutManager shouldUseAction:(NSControlCharacterAction)action forControlCharacterAtIndex:(NSUInteger)charIndex
+{
+	// We want to adjust the positions for tab characters
+	if ([self.textStorage.string characterAtIndex: charIndex] == '\t')
+		return NSControlCharacterWhitespaceAction;
+	
+	// Default action
+	return action;
+}
+
+- (CGRect)layoutManager:(NSLayoutManager *)layoutManager boundingBoxForControlGlyphAtIndex:(NSUInteger)glyphIndex forTextContainer:(NSTextContainer *)textContainer proposedLineFragment:(CGRect)proposedRect glyphPosition:(CGPoint)glyphPosition characterIndex:(NSUInteger)charIndex
+{
+	// Determine tab width. WARNING: The tab width computation is crazily expensive. Must be cached.
+	UIFont *primaryFont = ((TKETextStorage *)self.textStorage).font;
+	CGFloat tabWidth = [@"    " boundingRectWithSize:CGSizeMake(1000, 1000) options:0 attributes:@{NSFontAttributeName: primaryFont} context:nil].size.width;
+	
+	// Determine END of tab
+	CGFloat tabPosition = floor((glyphPosition.x + tabWidth/5) / tabWidth + 1) * tabWidth;
+
+	// Bounding rect from position to computed tab position
+	CGRect rect = CGRectZero;
+	rect.origin = glyphPosition;
+	rect.size.width = tabPosition - glyphPosition.x;
+	
+	return rect;
+}
+
 
 #pragma mark - Drawing
 
