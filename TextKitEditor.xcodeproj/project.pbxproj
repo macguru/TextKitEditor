@@ -21,6 +21,11 @@
 		506A8101190A474200148547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506A80E3190A474200148547 /* UIKit.framework */; };
 		506A8109190A474200148547 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 506A8107190A474200148547 /* InfoPlist.strings */; };
 		506A810B190A474200148547 /* TextKitEditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A810A190A474200148547 /* TextKitEditorTests.m */; };
+		506A8116190A4BB600148547 /* TKECodeString.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A8115190A4BB600148547 /* TKECodeString.m */; };
+		506A811A190A4BCB00148547 /* TKETextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A8119190A4BCB00148547 /* TKETextStorage.m */; };
+		506A811D190A4BD900148547 /* TKELayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A811C190A4BD900148547 /* TKELayoutManager.m */; };
+		506A8120190A4CA200148547 /* TKETextContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 506A811F190A4CA200148547 /* TKETextContainer.m */; };
+		506A8122190A4D5200148547 /* code.txt in Resources */ = {isa = PBXBuildFile; fileRef = 506A8121190A4D5200148547 /* code.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,15 @@
 		506A8106190A474200148547 /* TextKitEditorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TextKitEditorTests-Info.plist"; sourceTree = "<group>"; };
 		506A8108190A474200148547 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		506A810A190A474200148547 /* TextKitEditorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextKitEditorTests.m; sourceTree = "<group>"; };
+		506A8114190A4BB600148547 /* TKECodeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKECodeString.h; sourceTree = "<group>"; };
+		506A8115190A4BB600148547 /* TKECodeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKECodeString.m; sourceTree = "<group>"; };
+		506A8118190A4BCB00148547 /* TKETextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKETextStorage.h; sourceTree = "<group>"; };
+		506A8119190A4BCB00148547 /* TKETextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKETextStorage.m; sourceTree = "<group>"; };
+		506A811B190A4BD900148547 /* TKELayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKELayoutManager.h; sourceTree = "<group>"; };
+		506A811C190A4BD900148547 /* TKELayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKELayoutManager.m; sourceTree = "<group>"; };
+		506A811E190A4CA200148547 /* TKETextContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKETextContainer.h; sourceTree = "<group>"; };
+		506A811F190A4CA200148547 /* TKETextContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKETextContainer.m; sourceTree = "<group>"; };
+		506A8121190A4D5200148547 /* code.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = code.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +131,14 @@
 				506A80F1190A474200148547 /* Main.storyboard */,
 				506A80F4190A474200148547 /* TKEViewController.h */,
 				506A80F5190A474200148547 /* TKEViewController.m */,
+				506A8114190A4BB600148547 /* TKECodeString.h */,
+				506A8115190A4BB600148547 /* TKECodeString.m */,
+				506A8118190A4BCB00148547 /* TKETextStorage.h */,
+				506A8119190A4BCB00148547 /* TKETextStorage.m */,
+				506A811B190A4BD900148547 /* TKELayoutManager.h */,
+				506A811C190A4BD900148547 /* TKELayoutManager.m */,
+				506A811E190A4CA200148547 /* TKETextContainer.h */,
+				506A811F190A4CA200148547 /* TKETextContainer.m */,
 				506A80F7190A474200148547 /* Images.xcassets */,
 				506A80E6190A474200148547 /* Supporting Files */,
 			);
@@ -130,6 +152,7 @@
 				506A80E8190A474200148547 /* InfoPlist.strings */,
 				506A80EB190A474200148547 /* main.m */,
 				506A80ED190A474200148547 /* TextKitEditor-Prefix.pch */,
+				506A8121190A4D5200148547 /* code.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -230,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				506A80F8190A474200148547 /* Images.xcassets in Resources */,
+				506A8122190A4D5200148547 /* code.txt in Resources */,
 				506A80EA190A474200148547 /* InfoPlist.strings in Resources */,
 				506A80F3190A474200148547 /* Main.storyboard in Resources */,
 			);
@@ -250,9 +274,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506A8116190A4BB600148547 /* TKECodeString.m in Sources */,
+				506A8120190A4CA200148547 /* TKETextContainer.m in Sources */,
 				506A80F6190A474200148547 /* TKEViewController.m in Sources */,
 				506A80EC190A474200148547 /* main.m in Sources */,
 				506A80F0190A474200148547 /* TKEAppDelegate.m in Sources */,
+				506A811D190A4BD900148547 /* TKELayoutManager.m in Sources */,
+				506A811A190A4BCB00148547 /* TKETextStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
