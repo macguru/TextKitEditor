@@ -59,7 +59,7 @@
 		if (wrappingCharIndex == NSNotFound) {
 			wrappingCharIndex = [self.textStorage.string rangeOfCharacterFromSet:[NSCharacterSet.whitespaceCharacterSet invertedSet] options:0 range:firstLineCharRange].location;
 			if (wrappingCharIndex != NSNotFound)
-				wrappingCharIndex += 2;
+				wrappingCharIndex += 4;
 		}
 		
 		// Wrapping char found, determine indent
