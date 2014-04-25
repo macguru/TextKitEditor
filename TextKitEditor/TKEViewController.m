@@ -47,7 +47,7 @@
 	textView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	textView.translatesAutoresizingMaskIntoConstraints = YES;
 	textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-	textView.scrollEnabled = YES;
+	textView.spellCheckingType = UITextSpellCheckingTypeNo;
 	[self.view addSubview: textView];
 }
 
