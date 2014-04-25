@@ -23,4 +23,10 @@
  */
 @property(nonatomic) UIFont *font;
 
+
+/*!
+ @abstract Returns the paragraph number (aka line number) for the paragraph at the given index.
+ */
+- (NSUInteger)paragraphNumberForParagraphAtIndex:(NSUInteger)index;
+
 @end

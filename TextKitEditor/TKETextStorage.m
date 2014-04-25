@@ -30,7 +30,7 @@
 }
 
 
-#pragma mark - Properties
+#pragma mark - Accessors
 
 - (void)setContent:(TKECodeString *)content
 {
@@ -59,6 +59,12 @@
 	[self beginEditing];
 	[self updateAttributesForChangedRange: NSMakeRange(0, self.content.length)];
 	[self endEditing];
+}
+
+- (NSUInteger)paragraphNumberForParagraphAtIndex:(NSUInteger)index
+{
+	// Simple forward here. But since only the text storage "knows" about the mapping from content to cache (1:1) we better loop it through here.
+	return [_content paragraphNumberForParagraphAtIndex: index];
 }
 
 
