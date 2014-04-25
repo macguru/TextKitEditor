@@ -51,6 +51,16 @@
 	[self endEditing];
 }
 
+- (void)setFont:(UIFont *)font
+{
+	_font = font;
+	
+	// Re-compute attributes
+	[self beginEditing];
+	[self updateAttributesForChangedRange: NSMakeRange(0, self.content.length)];
+	[self endEditing];
+}
+
 
 #pragma mark - Text Storage Accessors
 
@@ -122,6 +132,10 @@
 	
 	// Clear all current attributes
 	[self setAttributes:@{} range:range];
+	
+	// Set font attribute
+	if (self.font)
+		[self addAttribute:NSFontAttributeName value:self.font range:range];
 	
 	// Enumerate code types in range
 	[self.content enumerateCodeInRange:range usingBlock:^(NSRange range, TKECodeType type) {

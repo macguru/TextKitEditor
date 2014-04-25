@@ -36,6 +36,7 @@
 	// Create text system
 	_textStorage = [TKETextStorage new];
 	_textStorage.content = _codeString;
+	_textStorage.font = [UIFont fontWithName:@"Menlo" size:13];
 	
 	NSLayoutManager *layoutManager = [TKELayoutManager new];
 	[_textStorage addLayoutManager: layoutManager];

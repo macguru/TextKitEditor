@@ -18,4 +18,9 @@
  */
 @property(nonatomic) TKECodeString *content;
 
+/*!
+ @abstract The font to be used in the text storage.
+ */
+@property(nonatomic) UIFont *font;
+
 @end
