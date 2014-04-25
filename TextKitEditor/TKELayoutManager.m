@@ -125,6 +125,17 @@
 	[super setLineFragmentRect:fragmentRect forGlyphRange:glyphRange usedRect:usedRect];
 }
 
+- (void)setExtraLineFragmentRect:(CGRect)fragmentRect usedRect:(CGRect)usedRect textContainer:(NSTextContainer *)container
+{
+	// Etxra line fragment rect must be indented just like every other line fragment rect
+	UIEdgeInsets insets = [self insetsForLineStartingAtCharacterIndex: self.textStorage.length];
+	
+	fragmentRect.origin.x += insets.left;
+	usedRect.origin.x += insets.left;
+	
+	[super setExtraLineFragmentRect:fragmentRect usedRect:usedRect textContainer:container];
+}
+
 - (NSControlCharacterAction)layoutManager:(NSLayoutManager *)layoutManager shouldUseAction:(NSControlCharacterAction)action forControlCharacterAtIndex:(NSUInteger)charIndex
 {
 	// We want to adjust the positions for tab characters
